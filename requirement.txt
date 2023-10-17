@@ -1,0 +1,7 @@
+<====== Libraries used =======>
+
+
+I have used two libraries through out the project::
+
+1. SYS: It is used to add a path for a file so that i can extract data from that file
+2. MATPLOTLIB: It is used to plot the bar charts with the given data

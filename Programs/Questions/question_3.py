@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 import sys
-from array import array
+
+# Adding the path so that it can find the desired file in the given path also
 sys.path.append("/home/divesh/Desktop/Python/Projects/IPL-project/Programs")
 from data import extracting_umpires_data 
 

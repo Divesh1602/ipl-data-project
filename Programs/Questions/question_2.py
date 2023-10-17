@@ -1,5 +1,4 @@
 import sys
-from array import array
 import matplotlib.pyplot as plt
 
 # Adding the path so that it can find the desired file in the given path also
