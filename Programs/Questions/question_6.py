@@ -1,31 +1,25 @@
-import sys
+import csv
 import matplotlib.pyplot as plt
 
 
-# Adding the path so that it can find the desired file in the given path also
-sys.path.append("/home/divesh/Desktop/Python/Projects/IPL-project/Programs")
-from data import extracting_matches_data 
-
-# Calling function from different file to get the data
-matches_data_list=extracting_matches_data()
 
 # Doing calculation to get the spicific data as per reuirements
-winner_team_dict={}
-i=1
-while i<len(matches_data_list):
-    
-    if matches_data_list[i]["result"] == "normal":
-        if matches_data_list[i]["winner"] in winner_team_dict:
-            if matches_data_list[i]["season"] in winner_team_dict[matches_data_list[i]["winner"]]:
-                winner_team_dict[matches_data_list[i]["winner"]][matches_data_list[i]["season"]]+=1
-            else:
-                winner_team_dict[matches_data_list[i]["winner"]][matches_data_list[i]["season"]]=1
-        else:
-            winner_team_dict[matches_data_list[i]["winner"]]={}
-            winner_team_dict[matches_data_list[i]["winner"]][matches_data_list[i]["season"]]=1
 
-   
-    i+=1
+winner_team_dict={}
+with open("../../Data/matches.csv",mode='r') as file:
+    matches_data=csv.DictReader(file)
+    for row in matches_data:
+        if row["result"] == "normal":
+            if row["winner"] in winner_team_dict:
+                if row["season"] in winner_team_dict[row["winner"]]:
+                    winner_team_dict[row["winner"]][row["season"]]+=1
+                else:
+                    winner_team_dict[row["winner"]][row["season"]]=1
+            else:
+                winner_team_dict[row["winner"]]={}
+                winner_team_dict[row["winner"]][row["season"]]=1
+
+
 
 
 

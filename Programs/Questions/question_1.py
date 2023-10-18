@@ -1,34 +1,23 @@
-import sys
+import csv
 import matplotlib.pyplot as plt
 
-# Adding the path so that it can find the desired file in the given path also
-sys.path.append("/home/divesh/Desktop/Python/Projects/IPL-project/Programs")
-from data import extracting_deliveries_data 
-
-# Calling function from different file to get the data
-deliveries_data_list=extracting_deliveries_data()
 
 # Doing calculation to get the spicific data as per reuirements
+
 total_runs_scored={}
-i=1
-while i<len(deliveries_data_list):
-	
-	if deliveries_data_list[i]["batting_team"] in total_runs_scored:
-		total_runs_scored[deliveries_data_list[i]["batting_team"]]+=int(deliveries_data_list[i]["total_runs"])
-	else:
-		total_runs_scored[deliveries_data_list[i]["batting_team"]]=int(deliveries_data_list[i]["total_runs"])
-	i+=1
+with open("../../Data/deliveries.csv",mode='r') as file:
+	deliveries_data=csv.DictReader(file)
+	for row in deliveries_data:
+		if row["batting_team"] in total_runs_scored:
+			total_runs_scored[row["batting_team"]]+=int(row["total_runs"])
+		else:
+			total_runs_scored[row["batting_team"]]=int(row["total_runs"])
+
+
 
 team_names_list=list(total_runs_scored.keys())
 runs_scored_list=list(total_runs_scored.values())
 colors = ['b', 'g', 'r', 'c', 'm', 'y', 'k', 'tab:blue', 'tab:orange', 'tab:green', 'tab:red', 'tab:purple', 'tab:brown', 'tab:pink']
-
-
-# For debugging purpose
-# i=0
-# while i<len(team_names_list):
-# 	print("{} :{}".format(team_names_list[i],runs_scored_list[i]))
-# 	i+=1
 
 
 # Plotting the graph

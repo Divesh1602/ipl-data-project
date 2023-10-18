@@ -1,24 +1,18 @@
-import sys
+import csv
 import matplotlib.pyplot as plt
 
-# Adding the path so that it can find the desired file in the given path also
-sys.path.append("/home/divesh/Desktop/Python/Projects/IPL-project/Programs")
-from data import extracting_matches_data 
-
-# Calling function from different file to get the data
-matches_data_list=extracting_matches_data()
 
 # Doing calculation to get the spicific data as per reuirements
 matches_data_dict={}
-i=1
-while i<len(matches_data_list):
+with open("../../Data/matches.csv",mode='r') as file:
+    matches_data=csv.DictReader(file)
+    for row in matches_data:
+        if row["season"] in matches_data_dict:
+            matches_data_dict[row["season"]]+=1
+        else:
+            matches_data_dict[row["season"]]=1
 
-       if matches_data_list[i]["season"] in matches_data_dict:
-            matches_data_dict[matches_data_list[i]["season"]]+=1
-       else:
-            matches_data_dict[matches_data_list[i]["season"]]=1
 
-       i+=1
 
 
 

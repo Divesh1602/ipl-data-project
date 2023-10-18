@@ -1,32 +1,28 @@
-import sys
+import csv
 import matplotlib.pyplot as plt
 
-# Adding the path so that it can find the desired file in the given path also
-sys.path.append("/home/divesh/Desktop/Python/Projects/IPL-project/Programs")
-from data import extracting_matches_data,extracting_deliveries_data
-
-# Calling function from different file to get the data
-matches_data_list=extracting_matches_data()
-deliveries_data_list=extracting_deliveries_data()
 # Doing calculation to get the spicific data as per reuirements
-match_id_list=[]
-j=1 
-while j<len(matches_data_list):
-	if matches_data_list[j]["season"]=='2016':
-		match_id_list.append(matches_data_list[j]["id"])
-	j+=1
-
 extra_runs_data_dict={}
-i=1
-while i<len(deliveries_data_list):
 
-	if deliveries_data_list[i]["match_id"] in match_id_list:
-		if deliveries_data_list[i]["batting_team"] in extra_runs_data_dict:
-			extra_runs_data_dict[deliveries_data_list[i]["batting_team"]]+=int(deliveries_data_list[i]["extra_runs"])
-		else:
-			extra_runs_data_dict[deliveries_data_list[i]["batting_team"]]=int(deliveries_data_list[i]["extra_runs"])
-		
-	i+=1
+with open("../../Data/matches.csv",'r') as file1,open("../../Data/deliveries.csv",'r') as file2:
+
+    matches_data=csv.DictReader(file1)
+    deliveries_data=csv.DictReader(file2)
+    match_id_list=[]
+    for row in matches_data:
+        if row["season"]=='2016':
+        	match_id_list.append(row["id"])
+		    
+
+    for row in deliveries_data:
+    	if row["match_id"] in match_id_list:
+    		if row["batting_team"] in extra_runs_data_dict:
+    			extra_runs_data_dict[row["batting_team"]]+=int(row["extra_runs"])
+    		else:
+    			extra_runs_data_dict[row["batting_team"]]=int(row["extra_runs"])
+	
+
+
 
 colors = ['b', 'g', 'r', 'c', 'm', 'y', 'k', 'tab:blue']
 extra_runs_team_list=list(extra_runs_data_dict.keys())

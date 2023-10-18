@@ -3,5 +3,5 @@
 
 I have used two libraries through out the project::
 
-1. SYS: It is used to add a path for a file so that i can extract data from that file
+1. SYcsvS: It is used to a read the csv files and extract data from it
 2. MATPLOTLIB: It is used to plot the bar charts with the given data

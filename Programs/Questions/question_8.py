@@ -1,41 +1,34 @@
-import sys
+import csv
 import matplotlib.pyplot as plt
 
-# Adding the path so that it can find the desired file in the given path also
-sys.path.append("/home/divesh/Desktop/Python/Projects/IPL-project/Programs")
-from data import extracting_matches_data,extracting_deliveries_data
 
-# Calling function from different file to get the data
-matches_data_list=extracting_matches_data()
-deliveries_data_list=extracting_deliveries_data()
 # Doing calculation to get the spicific data as per reuirements
-match_id_list=[]
-j=1 
-while j<len(matches_data_list):
-	if matches_data_list[j]["season"]=='2015':
-		match_id_list.append(matches_data_list[j]["id"])
-	j+=1
-
-
 economy_data_dict={}
-i=1
-while i<len(deliveries_data_list):
-   
-	if deliveries_data_list[i]["match_id"] in match_id_list:
-		if deliveries_data_list[i]["bowler"] in economy_data_dict:
-			economy_data_dict[deliveries_data_list[i]["bowler"]][0]+=int(deliveries_data_list[i]["total_runs"])
-			economy_data_dict[deliveries_data_list[i]["bowler"]][1]+=1
-			economy_data_dict[deliveries_data_list[i]["bowler"]][2]=economy_data_dict[deliveries_data_list[i]["bowler"]][1]//6
-			if economy_data_dict[deliveries_data_list[i]["bowler"]][2]!=0:
-				economy_data_dict[deliveries_data_list[i]["bowler"]][3]=round(economy_data_dict[deliveries_data_list[i]["bowler"]][0]/economy_data_dict[deliveries_data_list[i]["bowler"]][2],1)
-			else:
-				economy_data_dict[deliveries_data_list[i]["bowler"]][3]=0.0
-		
-		else:
-			   economy_data_dict[deliveries_data_list[i]["bowler"]]=[int(deliveries_data_list[i]["total_runs"]),1,0,0]
-				
-		
-	i+=1
+with open("../../Data/matches.csv",'r') as file1,open("../../Data/deliveries.csv",'r') as file2:
+
+    matches_data=csv.DictReader(file1)
+    deliveries_data=csv.DictReader(file2)
+    match_id_list=[]
+    for row in matches_data:
+        if row["season"]=='2015':
+        	match_id_list.append(row["id"])
+		    
+
+    for row in deliveries_data:
+    	if row["match_id"] in match_id_list:
+    		if row["bowler"] in economy_data_dict:
+    			economy_data_dict[row["bowler"]][0]+=int(row["total_runs"])
+    			economy_data_dict[row["bowler"]][1]+=1
+    			economy_data_dict[row["bowler"]][2]=economy_data_dict[row["bowler"]][1]//6
+    			if economy_data_dict[row["bowler"]][2]!=0:
+    				economy_data_dict[row["bowler"]][3]=round(economy_data_dict[row["bowler"]][0]/economy_data_dict[row["bowler"]][2],1)
+    			else:
+    				economy_data_dict[row["bowler"]][3]=0.0
+    		else:
+    			economy_data_dict[row["bowler"]]=[int(row["total_runs"]),1,0,0]
+	
+
+
 
 
 sorted_economy_data_dict=dict(sorted(economy_data_dict.items(), key=lambda item: item[1][3]))
