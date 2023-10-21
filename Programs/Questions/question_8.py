@@ -1,4 +1,4 @@
-"""This program is ploting extra runs conceded per team in the year 2016 """
+"""This program is ploting top 10 economical bowlers in the year 2015 """
 import csv
 import matplotlib.pyplot as plt
 
